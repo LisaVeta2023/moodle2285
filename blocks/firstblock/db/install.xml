@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/firstblock/db" VERSION="20231220" COMMENT="XMLDB file for Moodle blocks/firstblock"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="olimpiad" COMMENT="Default comment for the table, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="название олимпиады"/>
+        <FIELD NAME="start" TYPE="int" LENGTH="8" NOTNULL="false" SEQUENCE="false" COMMENT="дата начала набора"/>
+        <FIELD NAME="end" TYPE="int" LENGTH="8" NOTNULL="false" SEQUENCE="false" COMMENT="дата окончания набора"/>
+        <FIELD NAME="id_olimpiad" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="list_of_participants" COMMENT="список участников олимпиады">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_olimpiad" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="id_student" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="firstname" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="FirstName" SEQUENCE="false" COMMENT="имя участника"/>
+        <FIELD NAME="lastname" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="Lastname" SEQUENCE="false" COMMENT="фамилия участника"/>
+        <FIELD NAME="role" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="plugin" COMMENT="таблица для реализации многие ко многим">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="id_olimpiad" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="id_list_of_participants" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="id_olimpiad" TYPE="foreign" FIELDS="id_olimpiad" REFTABLE="olimpiad" REFFIELDS="id"/>
+        <KEY NAME="id_list_of_participants" TYPE="foreign" FIELDS="id_list_of_participants" REFTABLE="list_of_participants" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
